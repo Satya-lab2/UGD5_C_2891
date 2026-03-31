@@ -19,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     if (isLogin === false) {
-      router.replace('/auth/notauthorized');
+      router.replace('/auth/not-authorized');
     }
   }, [isLogin, router]);
 
