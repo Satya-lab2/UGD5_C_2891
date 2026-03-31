@@ -50,7 +50,7 @@ const LoginPage = () => {
     if (!formData.email) {
       newErrors.email = 'Email tidak boleh kosong';
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = 'Email harus sesuai format NPM (cth: 220711905@gmail.com)';
+      newErrors.email = 'Email harus sesuai format NPM (cth: 241712891@gmail.com)';
     }
 
     const npmRegex = /^[0-9]{9}$/;

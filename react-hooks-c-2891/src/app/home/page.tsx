@@ -3,70 +3,107 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Game1 from "../../components/Game1";
+import Game2 from "../../components/Game2";
+import { FaPowerOff } from 'react-icons/fa';
 
 export default function Home() {
   const router = useRouter();
+
   const [isLogin, setIsLogin] = useState<boolean | null>(null);
+  const [selectedGame, setSelectedGame] = useState<string | null>(null);
 
   useEffect(() => {
     const loginStatus = localStorage.getItem('isLogin');
     setIsLogin(!!loginStatus);
   }, []);
 
-  // ⏳ loading dulu biar ga flicker
+  useEffect(() => {
+    if (isLogin === false) {
+      router.replace('/auth/notauthorized');
+    }
+  }, [isLogin, router]);
+
   if (isLogin === null) return null;
 
-  // ❌ BELUM LOGIN → TAMPILKAN HALAMAN KHUSUS
-  if (!isLogin) {
-    return (
-      <div className="flex items-center justify-center min-h-screen w-full bg-gradient-to-br from-blue-400 to-blue-600">
-        <div className="bg-white/30 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center max-w-md w-full">
+  const handleLogout = () => {
+    localStorage.removeItem('isLogin');
+    router.replace('/auth/login');
+  };
 
-          {/* IMAGE */}
-          <img
-            src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
-            alt="not login"
-            className="rounded-xl mb-4 w-full h-40 object-cover"
-          />
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen text-white">
 
-          {/* TEXT */}
-          <h2 className="text-xl font-bold text-gray-800">
-            ❌ Anda belum login
+      <h1 className="text-4xl font-bold mb-3">
+        Selamat Datang!
+      </h1>
+
+      <button
+        onClick={handleLogout}
+        className="bg-red-500 hover:bg-red-600 p-3 rounded-full mb-6"
+      >
+        <FaPowerOff />
+      </button>
+
+      {!selectedGame && (
+        <div className="bg-black/80 p-10 rounded-2xl text-center shadow-xl backdrop-blur-md">
+          <h2 className="text-2xl font-semibold mb-6">
+            Choose Your Game
           </h2>
-          <p className="text-gray-600 mt-2 text-sm">
-            Silakan login terlebih dahulu
-          </p>
 
-          {/* BUTTON */}
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => setSelectedGame('game1')}
+              className="px-6 py-3 rounded-lg font-semibold 
+              bg-gradient-to-r from-orange-400 to-orange-600 
+              border-2 border-orange-300 
+              shadow-lg hover:scale-105 transition"
+            >
+              Tap The Mole 🐭
+            </button>
+
+            <button
+              onClick={() => setSelectedGame('game2')}
+              className="px-6 py-3 rounded-lg font-semibold 
+              bg-gradient-to-r from-green-400 to-green-600 
+              border-2 border-green-300 
+              shadow-lg hover:scale-105 transition"
+            >
+              Catching The Stars ⭐
+            </button>
+          </div>
+
+          <p className="mt-4 text-sm text-gray-300">
+            Pick one to start playing!
+          </p>
+        </div>
+      )}
+
+      {selectedGame === 'game1' && (
+        <div className="bg-black/80 p-10 rounded-2xl text-center shadow-xl backdrop-blur-md">
+          <Game1 />
+
           <button
-            onClick={() => router.push('/auth/login')}
-            className="mt-5 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+            onClick={() => setSelectedGame(null)}
+            className="mt-5 bg-gray-300 text-black px-4 py-2 rounded"
           >
             ← Kembali
           </button>
         </div>
-      </div>
-    );
-  }
+      )}
 
-  // ✅ SUDAH LOGIN → HALAMAN NORMAL
-  return (
-    <div className='flex flex-col items-center justify-center min-h-screen min-w-screen'>
-      <h1 className='text-4xl font-bold mb-4 text-white'>
-        Selamat Datang!
-      </h1>
+      {selectedGame === 'game2' && (
+        <div className="bg-black/80 p-10 rounded-2xl text-center shadow-xl backdrop-blur-md">
+          <Game2 />
 
-      <Game1 />
+          <button
+            onClick={() => setSelectedGame(null)}
+            className="mt-5 bg-gray-300 text-black px-4 py-2 rounded"
+          >
+            ← Kembali
+          </button>
+        </div>
+      )}
 
-      <button
-        onClick={() => {
-          localStorage.removeItem('isLogin');
-          router.push('/auth/login');
-        }}
-        className="mt-6 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg"
-      >
-        Logout
-      </button>
     </div>
   );
 }

@@ -37,7 +37,6 @@ const RegisterPage = () => {
 
   const password = watch('password', '');
 
-  // ✅ RUMUS WAJIB DARI DOSEN
   const strength = Math.min(
     (password.length > 7 ? 25 : 0) +
     (/[A-Z]/.test(password) ? 25 : 0) +
@@ -69,8 +68,6 @@ const RegisterPage = () => {
   return (
     <AuthFormWrapper title="Register">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 w-full">
-
-        {/* USERNAME */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">
             Username <span className="text-gray-500 text-xs">(max 8 karakter)</span>
@@ -90,7 +87,6 @@ const RegisterPage = () => {
           )}
         </div>
 
-        {/* EMAIL */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">Email</label>
           <input
@@ -111,7 +107,6 @@ const RegisterPage = () => {
           )}
         </div>
 
-        {/* NOMOR TELEPON */}
         <div className="space-y-2">
           <label className="text-sm font-medium text-gray-700">Nomor Telepon</label>
           <input
@@ -132,7 +127,6 @@ const RegisterPage = () => {
           )}
         </div>
 
-        {/* PASSWORD */}
         <div className="space-y-2 relative">
           <label className="text-sm font-medium text-gray-700">Password</label>
 
@@ -153,7 +147,6 @@ const RegisterPage = () => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
 
-          {/* STRENGTH BAR */}
           <div className="w-full h-2 bg-gray-200 rounded mt-2">
             <div
               className={`h-2 rounded ${getColor()}`}
@@ -164,7 +157,6 @@ const RegisterPage = () => {
           <p className="text-sm text-gray-600">Strength: {strength}%</p>
         </div>
 
-        {/* CONFIRM PASSWORD */}
         <div className="space-y-2 relative">
           <label className="text-sm font-medium text-gray-700">Konfirmasi Password</label>
 
@@ -183,7 +175,6 @@ const RegisterPage = () => {
             {showConfirm ? <FaEyeSlash /> : <FaEye />}
           </button>
 
-          {/* STRENGTH BAR (SAMA SEPERTI SS) */}
           <div className="w-full h-2 bg-gray-200 rounded mt-2">
             <div
               className={`h-2 rounded ${getColor()}`}
@@ -194,7 +185,6 @@ const RegisterPage = () => {
           <p className="text-sm text-gray-600">Strength: {strength}%</p>
         </div>
 
-        {/* CAPTCHA */}
         <div className="space-y-2">
           <div className="flex items-center space-x-3">
             <span className="text-sm font-medium text-gray-700">Captcha:</span>
@@ -219,15 +209,12 @@ const RegisterPage = () => {
           />
         </div>
 
-        {/* BUTTON */}
         <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg">
           Register
         </button>
 
-        {/* SOCIAL */}
         <SocialAuth />
 
-        {/* LOGIN LINK */}
         <p className="text-center text-sm text-gray-600">
           Sudah punya akun?{' '}
           <Link href="/auth/login" className="text-blue-600 font-semibold">

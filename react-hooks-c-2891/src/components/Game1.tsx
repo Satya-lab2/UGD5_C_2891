@@ -60,7 +60,6 @@ export default function Game1() {
     }
   }, [time]);
 
-  // Hit mole
   const hitMole = (index: number) => {
     if (index === moleIndex && gameActive) {
       setScore((prev) => prev + 1);
@@ -68,7 +67,6 @@ export default function Game1() {
     }
   };
 
-  // Start game
   const startGame = () => {
     setScore(0);
     setTime(30);
